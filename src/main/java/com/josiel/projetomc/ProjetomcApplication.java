@@ -1,5 +1,7 @@
 package com.josiel.projetomc;
 
+import static org.assertj.core.api.Assertions.setMaxLengthForSingleLineDescription;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -10,10 +12,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.josiel.projetomc.domain.Categoria;
 import com.josiel.projetomc.domain.Cidade;
+import com.josiel.projetomc.domain.Cliente;
+import com.josiel.projetomc.domain.Endereco;
 import com.josiel.projetomc.domain.Estado;
 import com.josiel.projetomc.domain.Produto;
+import com.josiel.projetomc.domain.enums.TipoCliente;
 import com.josiel.projetomc.repositories.CategoriaRepository;
 import com.josiel.projetomc.repositories.CidadeRepository;
+import com.josiel.projetomc.repositories.ClienteRepository;
+import com.josiel.projetomc.repositories.EnderecoRepository;
 import com.josiel.projetomc.repositories.EstadoRepository;
 import com.josiel.projetomc.repositories.ProdutoRepository;
 
@@ -28,10 +35,16 @@ public class ProjetomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private EstadoRepository estadoRepository;
-	
+
 	@Autowired
 	private CidadeRepository cidadeRepository;
-	
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetomcApplication.class, args);
 	}
@@ -63,9 +76,19 @@ public class ProjetomcApplication implements CommandLineRunner {
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2, c3));
 
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "10756343690", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("982517350", "1146197388"));
+
+		Endereco end1 = new Endereco(null, "Rua das couves", "301", "apto 303", "Jardim", "06604145", cli1, c1);
+		Endereco end2 = new Endereco(null, "Rua das orquídeas", "30", "fundos", "capela", "04715002", cli1, c2);
+
+		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
+
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
-		estadoRepository.saveAll(Arrays.asList(est1,est2));
-		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
+		estadoRepository.saveAll(Arrays.asList(est1, est2));
+		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2));
 	}
 }

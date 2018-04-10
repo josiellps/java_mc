@@ -5,19 +5,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.josiel.projetomc.domain.Categoria;
-import com.josiel.projetomc.repositories.CategoriaRepository;
+import com.josiel.projetomc.domain.Cliente;
+import com.josiel.projetomc.repositories.ClienteRepository;
 
 import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
-public class CategoriaService {
+public class ClienteService {
 
 	@Autowired
-	private CategoriaRepository repo;
+	private ClienteRepository repo;
 
-	public Categoria buscar(Integer id) {
-		Optional<Categoria> cat = repo.findById(id);
+	public Cliente buscar(Integer id) {
+		Optional<Cliente> cat = repo.findById(id);
 		if (cat == null) {
 			try {
 				throw new ObjectNotFoundException("Objeto não encontrado! Id:" + id);

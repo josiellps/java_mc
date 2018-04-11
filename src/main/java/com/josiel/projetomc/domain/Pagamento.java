@@ -1,41 +1,43 @@
 package com.josiel.projetomc.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.josiel.projetomc.domain.enums.EstadoPagamento;
 
 @Entity
-public class Categoria implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
-	@JsonIgnore
-	@ManyToMany(mappedBy = "categorias")
-	private List<Produto> produtos = new ArrayList<>();
+	private Integer pagamento;
 
-	public Categoria() {
+	@OneToOne
+	@JoinColumn(name = "pedido_id")
+	@MapsId
+	private Pedido pedido;
 
-	}
-
-	public Categoria(Integer id, String nome) {
+	public Pagamento(Integer id, EstadoPagamento pagamento, Pedido pedido) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.pagamento = pagamento.getCod();
+		this.pedido = pedido;
 	}
 
-	public Integer getId() {
-		return id;
+	public Pagamento() {
+
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Pagamento other = (Pagamento) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -63,23 +65,12 @@ public class Categoria implements Serializable {
 		return true;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public EstadoPagamento getPagamento() {
+		return EstadoPagamento.toEnum(pagamento);
 	}
 
-	public String getNome() {
-		return nome;
+	public void setPagamento(EstadoPagamento pagamento) {
+		this.pagamento = pagamento.getCod();
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public List<Produto> getProdutos() {
-		return produtos;
-	}
-
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
-	}
 }

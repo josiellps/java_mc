@@ -14,6 +14,7 @@ import com.josiel.projetomc.domain.Cidade;
 import com.josiel.projetomc.domain.Cliente;
 import com.josiel.projetomc.domain.Endereco;
 import com.josiel.projetomc.domain.Estado;
+import com.josiel.projetomc.domain.ItemPedido;
 import com.josiel.projetomc.domain.Pagamento;
 import com.josiel.projetomc.domain.PagamentoComBoleto;
 import com.josiel.projetomc.domain.PagamentoComCartao;
@@ -26,6 +27,7 @@ import com.josiel.projetomc.repositories.CidadeRepository;
 import com.josiel.projetomc.repositories.ClienteRepository;
 import com.josiel.projetomc.repositories.EnderecoRepository;
 import com.josiel.projetomc.repositories.EstadoRepository;
+import com.josiel.projetomc.repositories.ItemPedidoRepository;
 import com.josiel.projetomc.repositories.PagamentoRepository;
 import com.josiel.projetomc.repositories.PedidoRepository;
 import com.josiel.projetomc.repositories.ProdutoRepository;
@@ -50,12 +52,15 @@ public class ProjetomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	@Autowired
 	private PedidoRepository pedidoRepository;
-	
+
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetomcApplication.class, args);
@@ -103,10 +108,22 @@ public class ProjetomcApplication implements CommandLineRunner {
 		Pagamento pgt1 = new PagamentoComCartao(null, EstadoPagamento.QUIATADO, ped1, 6);
 		ped1.setPagamento(pgt1);
 
-		Pagamento pgt2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 14:36"), null);
+		Pagamento pgt2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 14:36"),
+				null);
 		ped2.setPagamento(pgt2);
 
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+
+		ItemPedido item1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido item2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido item3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+		ped1.getItens().addAll(Arrays.asList(item1, item2));
+		ped2.getItens().addAll(Arrays.asList(item3));
+
+		p1.getItens().addAll(Arrays.asList(item1));
+		p2.getItens().addAll(Arrays.asList(item3));
+		p3.getItens().addAll(Arrays.asList(item2));
 
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
@@ -114,7 +131,9 @@ public class ProjetomcApplication implements CommandLineRunner {
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(end1, end2));
-		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
-		pagamentoRepository.saveAll(Arrays.asList(pgt1,pgt2));
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pgt1, pgt2));
+		itemPedidoRepository.saveAll(Arrays.asList(item1, item2, item3));
+
 	}
 }

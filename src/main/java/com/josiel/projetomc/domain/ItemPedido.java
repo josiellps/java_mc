@@ -2,15 +2,17 @@ package com.josiel.projetomc.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class ItemPedido  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
+	@JsonIgnore
+	@EmbeddedId
 	private ItemPedidoPK id = new ItemPedidoPK();
-
 	private Double desconto;
 	private Integer quantidade;
 	private Double preco;
@@ -28,9 +30,11 @@ public class ItemPedido  implements Serializable {
 		this.preco = preco;
 	}
 
+	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
+
 
 	public Produto getProduto() {
 		return id.getProduto();

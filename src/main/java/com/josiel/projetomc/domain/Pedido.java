@@ -17,7 +17,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.springframework.boot.autoconfigure.data.ConditionalOnRepositoryType;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Pedido implements Serializable {
@@ -28,21 +29,24 @@ public class Pedido implements Serializable {
 	private Integer id;
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instante;
 
+	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 
 	@ManyToOne
 	@JoinColumn(name = "endereco_de_entrega_id")
-	private Endereco endereDeEntrega;
+	private Endereco enderecoDeEntrega;
 
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
 	@OneToMany(mappedBy="id.pedido")
-	private Set<ItemPedido> itens = new HashSet();
+	private Set<ItemPedido> itens = new HashSet<>();
 
 	public Pedido() {
 
@@ -53,7 +57,7 @@ public class Pedido implements Serializable {
 		this.id = id;
 		this.instante = instante;
 		this.cliente = cliente;
-		this.endereDeEntrega = endereco;
+		this.enderecoDeEntrega = endereco;
 
 	}
 
@@ -81,12 +85,12 @@ public class Pedido implements Serializable {
 		this.pagamento = pagamento;
 	}
 
-	public Endereco getEndereDeEntrega() {
-		return endereDeEntrega;
+	public Endereco getEnderecoDeEntrega() {
+		return enderecoDeEntrega;
 	}
 
-	public void setEndereDeEntrega(Endereco endereDeEntrega) {
-		this.endereDeEntrega = endereDeEntrega;
+	public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
+		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
 	public Cliente getCliente() {

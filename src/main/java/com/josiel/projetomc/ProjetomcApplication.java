@@ -70,7 +70,15 @@ public class ProjetomcApplication implements CommandLineRunner {
 		// TODO Auto-generated method stub
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
-
+		
+		Categoria cat3 = new Categoria(null, "Cama mesa e banho");
+		Categoria cat4 = new Categoria(null, "jardinagem");
+		Categoria cat5 = new Categoria(null, "Construção");
+		Categoria cat6 = new Categoria(null, "Advocacia");
+		Categoria cat7 = new Categoria(null, "escolar");
+		Categoria cat8 = new Categoria(null, "Móvel");
+		Categoria cat9 = new Categoria(null, "fodasse");
+		
 		Produto p1 = new Produto(null, "Computador", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
 		Produto p3 = new Produto(null, "Mouse", 80.00);
@@ -124,7 +132,7 @@ public class ProjetomcApplication implements CommandLineRunner {
 		p2.getItens().addAll(Arrays.asList(item3));
 		p3.getItens().addAll(Arrays.asList(item2));
 
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));

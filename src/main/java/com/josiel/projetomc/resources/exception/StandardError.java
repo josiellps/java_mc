@@ -1,4 +1,4 @@
-package com.josiel.projetomc.services.exceptions;
+package com.josiel.projetomc.resources.exception;
 
 import java.io.Serializable;
 

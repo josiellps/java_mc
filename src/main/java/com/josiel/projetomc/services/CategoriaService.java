@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.josiel.projetomc.domain.Categoria;
-import com.josiel.projetomc.domain.Cliente;
 import com.josiel.projetomc.dto.CategoriaDTO;
 import com.josiel.projetomc.repositories.CategoriaRepository;
 import com.josiel.projetomc.services.exceptions.DataIntegrityException;

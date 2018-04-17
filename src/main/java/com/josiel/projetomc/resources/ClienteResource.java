@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.josiel.projetomc.domain.Categoria;
 import com.josiel.projetomc.domain.Cliente;
+import com.josiel.projetomc.dto.CategoriaDTO;
 import com.josiel.projetomc.dto.ClienteDTO;
+import com.josiel.projetomc.dto.ClienteNewDTO;
 import com.josiel.projetomc.services.ClienteService;
 
 @RestController
@@ -35,14 +38,14 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Cliente> insert(@Valid @RequestBody ClienteDTO objDto) {
+	public ResponseEntity<Categoria> insert(@Valid @RequestBody ClienteNewDTO objDto) {
 		Cliente obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").buildAndExpand(obj.getId())
 				.toUri();
 		return ResponseEntity.created(uri).build();
 	}
-
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Cliente> update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id) {
 		Cliente obj=service.fromDTO(objDto);

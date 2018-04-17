@@ -103,8 +103,8 @@ public class ProjetomcApplication implements CommandLineRunner {
 		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "10756343690", TipoCliente.PESSOAFISICA);
 		cli1.getTelefones().addAll(Arrays.asList("982517350", "1146197388"));
 
-		Endereco end1 = new Endereco(null, "Rua das couves", "301", "apto 303", "Jardim", "06604145", cli1, c1);
-		Endereco end2 = new Endereco(null, "Rua das orquídeas", "30", "fundos", "capela", "04715002", cli1, c2);
+		Endereco end1 = new Endereco(null, "Rua das couves", 301, "apto 303", "Jardim", "06604145", cli1, c1);
+		Endereco end2 = new Endereco(null, "Rua das orquídeas", 30, "fundos", "capela", "04715002", cli1, c2);
 
 		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
 

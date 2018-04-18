@@ -2,26 +2,47 @@ package com.josiel.projetomc.dto;
 
 import java.io.Serializable;
 
-public class ClienteNewDTO  implements Serializable {
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.josiel.projetomc.services.validation.ClienteInsert;
+
+@ClienteInsert
+public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Length(min = 5, max = 120, message = "O tamnho deve ser entre  5 e 120 caracteres")
 	private String nome;
-	private String email;
-	private String cpfOuCnpj;
-	private Integer tipo;
 	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Email
+	private String email;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")	
+	private String cpfOuCnpj;
+	
+	private Integer tipo;
+
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String logradouro;
+		
 	private Integer numero;
+	
 	private String complemento;
 	private String bairro;
-	private String cep;
 	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	private String cep;
+
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String telefone1;
 	private String telefone2;
 	private String telefone3;
-	
-	private Integer cidadeId;
 
+	private Integer cidadeId;
 
 	public String getNome() {
 		return nome;
@@ -126,7 +147,5 @@ public class ClienteNewDTO  implements Serializable {
 	public void setCidadeId(Integer cidadeId) {
 		this.cidadeId = cidadeId;
 	}
-	
-	
 
 }

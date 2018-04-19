@@ -19,7 +19,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.josiel.projetomc.domain.Categoria;
 import com.josiel.projetomc.domain.Cliente;
-import com.josiel.projetomc.dto.CategoriaDTO;
 import com.josiel.projetomc.dto.ClienteDTO;
 import com.josiel.projetomc.dto.ClienteNewDTO;
 import com.josiel.projetomc.services.ClienteService;

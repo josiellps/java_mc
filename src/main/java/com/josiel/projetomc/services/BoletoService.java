@@ -3,12 +3,14 @@ package com.josiel.projetomc.services;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.josiel.projetomc.domain.PagamentoComBoleto;
+import org.springframework.stereotype.Service;
 
+import com.josiel.projetomc.domain.PagamentoComBoleto;
+@Service
 public class BoletoService {
 
 	public void preencherPagamentoComBoleto(PagamentoComBoleto pgto, Date instanteDoPedido) {
-		Calendar cal=Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
 		cal.setTime(instanteDoPedido);
 		cal.add(Calendar.DAY_OF_MONTH, 7);
 		pgto.setDataVencimento(cal.getTime());

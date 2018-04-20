@@ -78,6 +78,7 @@ public class Pedido implements Serializable {
 		return pagamento;
 	}
 
+
 	public void setPagamento(Pagamento pagamento) {
 		this.pagamento = pagamento;
 	}

@@ -32,7 +32,8 @@ public abstract class Pagamento implements Serializable {
 	@JoinColumn(name = "pedido_id")
 	@MapsId
 	private Pedido pedido;
-
+	private Integer estado;
+	
 	public Pagamento(Integer id, EstadoPagamento pagamento, Pedido pedido) {
 		super();
 		this.id = id;
@@ -81,5 +82,13 @@ public abstract class Pagamento implements Serializable {
 	public void setPagamento(EstadoPagamento pagamento) {
 		this.pagamento = pagamento.getCod();
 	}
+
+	public EstadoPagamento getEstado() {
+		return EstadoPagamento.toEnum(estado);
+	}
+
+	public void setEstado(EstadoPagamento estado) {
+		this.estado = estado.getCod();
+}
 
 }

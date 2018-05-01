@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.josiel.projetomc.services.DBService;
+import com.josiel.projetomc.services.EmailService;
+import com.josiel.projetomc.services.MockMailService;
 
 @Configuration
 @Profile("dev")
@@ -22,10 +24,13 @@ public class DevConfig {
 	
 	@Bean
 	public boolean instantiateDatabase() throws ParseException {
-		if(!strategy.equals("create")) {
-			return false;
-		}
+
 		dbService.instantiateDatabase();
 		return true;
+	}
+	
+	@Bean
+	public EmailService emailSerivce() {
+	return new MockMailService();	
 	}
 }

@@ -36,6 +36,12 @@ public class PedidoService {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 
+	@Autowired
+	private ClienteService clienteService;
+	
+	@Autowired
+	private EmailService emailService;
+	
 	public Pedido buscar(Integer id) {
 		Optional<Pedido> cat = repo.findById(id);
 		if (cat == null) {
@@ -49,25 +55,29 @@ public class PedidoService {
 		return cat.orElse(null);
 	}
 
+	
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
+		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 		obj.getPagamento().setPagamento(EstadoPagamento.PENDENTE);
-		;
+		
 		obj.getPagamento().setPedido(obj);
 		if (obj.getPagamento() instanceof PagamentoComBoleto) {
-			PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
-			boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
+			pagamentoRepository.save(obj.getPagamento());			
+			//PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
+			//boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
 		}
-		pagamentoRepository.save(obj.getPagamento());
-
+		
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
 			Optional<Produto> p = produtoRepository.findById(ip.getProduto().getId());
+			ip.setProduto(p.orElse(null));
 			ip.setPreco(p.orElse(null).getPreco());
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
+		emailService.SendOrderConfirmationEmail(obj);
 		return obj;
 
 	}

@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import org.hibernate.tool.schema.internal.exec.GenerationTargetToStdout;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class ItemPedido  implements Serializable {
@@ -80,6 +82,9 @@ public class ItemPedido  implements Serializable {
 		this.preco = preco;
 	}
 
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
+}
 
 	@Override
 	public int hashCode() {
@@ -104,6 +109,20 @@ public class ItemPedido  implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProduto().getNome());
+		builder.append(", Qtde: ");
+		builder.append(getQuantidade());
+		builder.append(", Preço ubnitário: ");
+		builder.append(getPreco());
+		builder.append(", SubTotal: ");
+		builder.append(getSubTotal());
+		builder.append("\n");
+		return builder.toString();
 	}
 
 }

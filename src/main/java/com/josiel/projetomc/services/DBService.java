@@ -61,6 +61,7 @@ public class DBService {
 	private ItemPedidoRepository itemPedidoRepository;
 	
 	public void instantiateDatabase() throws ParseException {
+		
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
 

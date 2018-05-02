@@ -13,8 +13,8 @@ import com.josiel.projetomc.services.EmailService;
 import com.josiel.projetomc.services.MockMailService;
 
 @Configuration
-@Profile("dev")
-public class DevConfig {
+@Profile("prod")
+public class ProdConfig {
 
 	@Autowired
 	private DBService dbService;

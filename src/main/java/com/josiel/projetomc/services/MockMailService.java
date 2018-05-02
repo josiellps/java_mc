@@ -8,11 +8,12 @@ public class MockMailService extends AbstractEmailService {
 
 	
 	private static final Logger LOG=LoggerFactory.getLogger(MockMailService.class);
+	
 	@Override
 	public void SendEmail(SimpleMailMessage msg) {
 		// TODO Auto-generated method stub
 		LOG.info("Simulando envio de email");
 		LOG.info(msg.toString());
 		LOG.info("Email enviado");
-	}	
+	}
 }

@@ -60,25 +60,22 @@ public class PedidoService {
 		obj.setId(null);
 		obj.setInstante(new Date());
 		obj.setCliente(clienteService.find(obj.getCliente().getId()));
-		obj.getPagamento().setPagamento(EstadoPagamento.PENDENTE);
-		
+		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 		if (obj.getPagamento() instanceof PagamentoComBoleto) {
-			pagamentoRepository.save(obj.getPagamento());			
-			//PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
-			//boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
+			PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
+			boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
 		}
-		
+		obj = repo.save(obj);
+		pagamentoRepository.save(obj.getPagamento());
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
-			Optional<Produto> p = produtoRepository.findById(ip.getProduto().getId());
-			ip.setProduto(p.orElse(null));
-			ip.setPreco(p.orElse(null).getPreco());
+			ip.setProduto(produtoRepository.findById(ip.getProduto().getId()).orElse(null));
+			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.SendOrderConfirmationEmail(obj);
 		return obj;
-
 	}
 }

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.josiel.projetomc.services.DBService;
 import com.josiel.projetomc.services.EmailService;
-import com.josiel.projetomc.services.MockMailService;
+import com.josiel.projetomc.services.SmtpEmailService;
 
 @Configuration
 @Profile("prod")
@@ -24,15 +24,13 @@ public class ProdConfig {
 
 	@Bean
 	public boolean instantiateDatabase() throws ParseException {
-		if (!"create".equals(strategy)) {			
-			return false;
-		}
+
 		dbService.instantiateDatabase();
 		return true;
 	}
 
 	@Bean
-	public EmailService emailSerivce() {
-		return new MockMailService();
+	public SmtpEmailService emailSerivce() {
+		return new SmtpEmailService();
 	}
 }

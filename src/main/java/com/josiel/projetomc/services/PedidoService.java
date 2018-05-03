@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.josiel.projetomc.domain.ItemPedido;
 import com.josiel.projetomc.domain.PagamentoComBoleto;
 import com.josiel.projetomc.domain.Pedido;
-import com.josiel.projetomc.domain.Produto;
 import com.josiel.projetomc.domain.enums.EstadoPagamento;
 import com.josiel.projetomc.repositories.ItemPedidoRepository;
 import com.josiel.projetomc.repositories.PagamentoRepository;

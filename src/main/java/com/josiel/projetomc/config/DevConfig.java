@@ -9,8 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.josiel.projetomc.services.DBService;
-import com.josiel.projetomc.services.EmailService;
-import com.josiel.projetomc.services.MockMailService;
+import com.josiel.projetomc.services.SmtpEmailService;
 
 @Configuration
 @Profile("dev")
@@ -32,7 +31,7 @@ public class DevConfig {
 	}
 
 	@Bean
-	public EmailService emailSerivce() {
-		return new MockMailService();
+	public SmtpEmailService emailSerivce() {
+		return new SmtpEmailService();
 	}
 }
